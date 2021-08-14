@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.google.cloud.tools.jib' version '3.1.2'
 }
 
 group = 'com.soongjamm'
@@ -16,6 +17,19 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+jib {
+    from {
+        image = "adoptopenjdk/openjdk11:alpine" // base image
+    }
+    to {
+        image = "kimstz0/hello-jib" // 도커 허브 레포지토리
+        tags = ["latest"]
+    }
+    container {
+        creationTime = "USE_CURRENT_TIMESTAMP" // 설정 안하면 50년 전으로 나옴
+    }
 }
 
 dependencies {
