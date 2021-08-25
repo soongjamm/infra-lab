@@ -7,7 +7,12 @@ services:
       - ./mysql/conf.d:/etc/mysql/conf.d
     restart: always
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+
+  tech-lab:
+    image: kimstz0/hello-jib:latest
+    ports:
+      - 8080:8080

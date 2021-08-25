@@ -29,6 +29,7 @@ jib {
     }
     container {
         creationTime = "USE_CURRENT_TIMESTAMP" // 설정 안하면 50년 전으로 나옴
+        jvmFlags = ["-Dspring.profiles.active=prod"]
     }
 }
 

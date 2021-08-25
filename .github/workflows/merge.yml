@@ -1,0 +1,30 @@
+name: CD
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  PROJECT: tech-lab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_SSH_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          envs: env.PROJECT
+          script: |
+            whoami
+            ls -al
+            cd ${{ env.PROJECT }}
+            git pull origin main
+            cd ${{ env.PROJECT }}/techlab-compose
+            docker-compose pull
+            docker-compose up
+
+

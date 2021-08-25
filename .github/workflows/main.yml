@@ -5,8 +5,8 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
+#  push:
+#    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -22,18 +22,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
 
       # MySQL 데몬을 띄웁니다.
       # service container를 쓸 수도 있습니다.
-      - name: Start MySQL
-        uses: samin/mysql-action@v1.3
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
         with:
           host port: 3306
           container port: 3306
+          character set server: 'utf8'
           collation server: 'utf8_general_ci'
-          mysql version: '8.0.25'
+          mysql version: '8.0'
           mysql database: 'techlab'
           mysql root password: ${{ secrets.MYSQL_ROOT_PASSWORD }}
 
@@ -78,3 +77,20 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      # Docker compose를 ec2에 전송하고 실행시키기
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_SSH_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          envs: env.PROJECT
+          script: |
+            whoami
+            ls -al
+            cd ${{ env.PROJECT }}
+            git pull origin main
+            cd ${{ env.PROJECT }}/techlab-compose
+            docker-compose pull
+            docker-compose up
