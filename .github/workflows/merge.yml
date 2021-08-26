@@ -27,5 +27,3 @@ jobs:
             cd techlab-compose
             docker-compose pull
             docker-compose up
-
-
