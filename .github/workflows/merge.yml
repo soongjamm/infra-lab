@@ -26,6 +26,7 @@ jobs:
             git pull
             cd techlab-compose
             docker-compose pull
-            docker-compose up
+            docker-compose up --force-recreate
+            docker image prune -f
 
 
