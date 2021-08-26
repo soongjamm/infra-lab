@@ -22,7 +22,7 @@ jobs:
             whoami
             ls -al
             cd ${{ env.PROJECT }}
-            git pull origin main
+            git pull
             cd ${{ env.PROJECT }}/techlab-compose
             docker-compose pull
             docker-compose up
