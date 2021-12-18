@@ -1,1 +1,5 @@
 rootProject.name = 'tech-lab'
+include 'spring-batch'
+include 'jib'
+include 'jmh-benchmark'
+

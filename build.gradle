@@ -1,49 +1,46 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-    id 'com.google.cloud.tools.jib' version '3.1.2'
+    id 'io.freefair.lombok' version '6.0.0-m2' apply false
+    id 'org.springframework.boot' version '2.5.3' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'com.google.cloud.tools.jib' version '3.1.2' apply false
 }
 
 group = 'com.soongjamm'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+
+def javaProjects = [project(':jib'), project(':spring-batch'), project('jmh-benchmark')]
+def springBootProjects = [project(':jib'), project('spring-batch')]
+
+configure(javaProjects) {
+    apply plugin: 'java'
+    apply plugin: 'io.freefair.lombok'
+
+    repositories {
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = '11'
+        sourceCompatibility = '11'
+        options.encoding = 'UTF-8'
+    }
+
+    dependencies {
+        if (!springBootProjects.contains(project)) {
+            testImplementation(platform('org.junit:junit-bom:5.7.1'))
+            testImplementation 'org.junit.jupiter:junit-jupiter'
+            testImplementation 'org.assertj:assertj-core:3.20.2'
+            testImplementation 'org.mockito:mockito-junit-jupiter:3.12.4'
+        }
     }
 }
 
-repositories {
-    mavenCentral()
-}
+configure(springBootProjects) {
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
 
-jib {
-    from {
-        image = "adoptopenjdk/openjdk11:alpine" // base image
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
-    to {
-        image = "kimstz0/hello-jib" // 도커 허브 레포지토리
-        tags = ["latest"]
-    }
-    container {
-        creationTime = "USE_CURRENT_TIMESTAMP" // 설정 안하면 50년 전으로 나옴
-        jvmFlags = ["-Dspring.profiles.active=prod"]
-    }
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'mysql:mysql-connector-java:8.0.25'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-test {
-    useJUnitPlatform()
 }

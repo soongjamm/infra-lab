@@ -1,0 +1,29 @@
+plugins {
+    id "me.champeau.jmh" version "0.6.6"
+}
+
+group 'com.soongjamm'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    jmh 'org.openjdk.jmh:jmh-core:0.9'
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jmh {
+    fork = 1
+    warmupIterations = 1
+    iterations = 1
+}
+
+test {
+    useJUnitPlatform()
+}

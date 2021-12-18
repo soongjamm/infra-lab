@@ -1,0 +1,15 @@
+
+file:
+  input: account-list.csv
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:55432/batch_practice
+    username: soongjamm
+    password: P@ssw0rd
+  sql:
+    init:
+      mode: never
+  batch:
+    jdbc:
+      initialize-schema: never
