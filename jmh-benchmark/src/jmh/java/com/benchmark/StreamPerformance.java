@@ -48,5 +48,4 @@ public class StreamPerformance {
         }
         return result;
     }
-
 }
