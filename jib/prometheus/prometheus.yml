@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 10s # 얼마나 자주 메트릭을 긁어올 것인지. (default)
+
+scrape_configs:
+  - job_name: 'spring_micrometer'         # 수집된 메트릭의 이름으로 할당됨
+    metrics_path: '/actuator/prometheus'  # 메트릭을 수집하기 위한 HTTP 자원 경로
+    scrape_interval: 5s                   # 해당 job 에서 얼마나 자주 긁어올 것인지?
+    static_configs:                       # 스크랩할 대상을 명시하는 곳
+      - targets: ['192.168.205.1:8080']   # bridge network IP
+
+# 설정 정보 : https://prometheus.io/docs/prometheus/latest/configuration/configuration/
