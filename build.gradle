@@ -1,6 +1,6 @@
 plugins {
     id 'io.freefair.lombok' version '6.0.0-m2' apply false
-    id 'org.springframework.boot' version '2.5.3' apply false
+    id 'org.springframework.boot' version '2.7.18' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
     id 'com.google.cloud.tools.jib' version '3.1.2' apply false
 }
@@ -9,8 +9,8 @@ group = 'com.soongjamm'
 version = '0.0.1-SNAPSHOT'
 
 
-def javaProjects = [project(':jib'), project(':spring-batch'), project('jmh-benchmark')]
-def springBootProjects = [project(':jib'), project('spring-batch')]
+def javaProjects = [project(':jib'), project(':spring-batch'), project(':jmh-benchmark'), project(':spring-data-redis')]
+def springBootProjects = [project(':jib'), project(':spring-batch'), project(':spring-data-redis')]
 
 configure(javaProjects) {
     apply plugin: 'java'

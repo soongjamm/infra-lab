@@ -1,5 +1,6 @@
 rootProject.name = 'tech-lab'
 include 'spring-batch'
+include 'spring-data-redis'
 include 'jib'
 include 'jmh-benchmark'
 

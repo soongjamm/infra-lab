@@ -12,6 +12,13 @@ services:
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
 
+  redis:
+    image: redis:6.2.4
+    container_name: techlab-redis
+    ports:
+      - 6379:6379
+    restart: always
+
   tech-lab:
     image: kimstz0/hello-jib:latest
     ports:
