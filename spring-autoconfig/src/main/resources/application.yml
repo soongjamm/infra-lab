@@ -1,0 +1,7 @@
+server:
+  shutdown: immediate
+  port: 8080
+
+spring:
+  profiles:
+    include: time-reminder

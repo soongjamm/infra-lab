@@ -1,0 +1,5 @@
+time-reminder:
+  auto-start-up: true
+  enabled: true
+  time: 5
+  unit: SECONDS

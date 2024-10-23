@@ -9,8 +9,8 @@ group = 'com.soongjamm'
 version = '0.0.1-SNAPSHOT'
 
 
-def javaProjects = [project(':jib'), project(':spring-batch'), project(':jmh-benchmark'), project(':spring-data-redis')]
-def springBootProjects = [project(':jib'), project(':spring-batch'), project(':spring-data-redis')]
+def javaProjects = [project(':jib'), project(':spring-batch'), project(':jmh-benchmark'), project(':spring-data-redis'), project(':spring-autoconfig')]
+def springBootProjects = [project(':jib'), project(':spring-batch'), project(':spring-data-redis'), project(':spring-autoconfig')]
 
 configure(javaProjects) {
     apply plugin: 'java'
@@ -41,6 +41,7 @@ configure(springBootProjects) {
     apply plugin: "io.spring.dependency-management"
 
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 }
